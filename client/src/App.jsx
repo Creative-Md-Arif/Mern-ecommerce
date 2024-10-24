@@ -1,10 +1,12 @@
+import Header from "./components/Header"
 
 
 function App() {
 
   return (
    <main>
-       <p className=" bg-black">client application</p>
+       <Header/>
+       <p className="">client application</p>
    </main>
   )
 }
