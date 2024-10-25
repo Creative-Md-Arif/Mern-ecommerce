@@ -1,12 +1,20 @@
+import Banner from "./components/Banner"
 import Header from "./components/Header"
+import Title from "./components/Title"
+
 
 
 function App() {
 
   return (
    <main>
-       <Header/>
-       <p className="">client application</p>
+     <Banner/>
+     {/* sale */}
+     {/* new arrival */}
+     {/* Best sellers */}
+     {/* contact of the year */}
+     {/* special offer */}
+
    </main>
   )
 }
