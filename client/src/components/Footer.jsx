@@ -5,7 +5,7 @@ import SocialLinks from "./SocialLinks";
 import { Link } from "react-router-dom";
 import { paymentCard } from "../assets/images/index";
 const shopArray = [
-  { title: "Accessories", link: "/accessories" },
+  { title: "Accessories", link: "#" },
   { title: "Cloths", link: "/shop" },
   { title: "Electronics", link: "/shop" },
   { title: "Home appliances", link: "/shop" },
@@ -14,7 +14,7 @@ const shopArray = [
 const accountArray = [
   { title: "Profile", link: "/profile" },
   { title: "Orders", link: "/orders" },
-  { title: "Addresses", link: "/addresses" },
+  { title: "Addresses", link: "#" },
   { title: "Account Detail", link: "/profile" },
   { title: "Privacy policy", link: "/profile" },
 ];

@@ -104,7 +104,10 @@ const Banner = () => {
                     ${item?.from}
                   </span>
                 </p>
-                <button onClick={() => navigate("/shop")} className="w-24 md:w-44 py-2 md:py-3 bg-black/80  text-white text-xs rounded-md md:text-sm uppercase font-semibold hover:bg-black hoverEffect">
+                <button
+                  onClick={() => navigate("/shop")}
+                  className="w-24 md:w-44 py-2 md:py-3 bg-black/80  text-white text-xs rounded-md md:text-sm uppercase font-semibold hover:bg-black hoverEffect"
+                >
                   Shop Now
                 </button>
               </Container>
