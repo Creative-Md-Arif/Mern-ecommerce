@@ -4,3 +4,4 @@
 4.npm i react-router-dom
 5.npm i react-slick
 6.npm install slick-carousel
+7.npm install @headlessui/react

@@ -87,7 +87,7 @@ const Banner = () => {
               alt="bannerImage"
               className="h-[200px] sm:h-full lg:h-[500px] w-full object-cover"
             />
-            <div className="absolute top-0 left-0 w-full h-full bg-black/20">
+            <div className="absolute top-0 left-0 w-full h-full bg-black/30">
               <Container className="flex flex-col justify-center gap-2 md:gap-3 h-full">
                 <p className=" w-24 py-1 bg-red-600 text-white text-xs uppercase text-center font-medium tracking-wide rounded-md  ">
                   {item?.sale}
