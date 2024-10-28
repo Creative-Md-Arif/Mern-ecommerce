@@ -30,11 +30,11 @@ function App() {
             </div>
             <div className="flex-1 px-5 py-2 ml-[18%]">
               <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/add" element={<Add />} />
-                <Route path="/list" element={<List />} />
-                <Route path="/orders" element={<Orders />} />
-                <Route path="/users" element={<Users />} />
+                <Route path="/" element={<Home token={token} />} />
+                <Route path="/add" element={<Add token={token} />} />
+                <Route path="/list" element={<List token={token} />} />
+                <Route path="/orders" element={<Orders token={token} />} />
+                <Route path="/users" element={<Users token={token} />} />
               </Routes>
             </div>
           </div>

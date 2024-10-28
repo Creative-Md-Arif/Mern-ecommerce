@@ -1,12 +1,35 @@
 import React, { useState } from "react";
 import { logo } from "../assets/images";
 import Title from "./Title";
+import { toast } from "react-hot-toast";
+import axios from "axios";
+import { serverUrl } from "../../config";
 
 const Login = ({ setToken }) => {
+ 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleAdminLogin = async (e) => {
     e.preventDefault();
+
+    try {
+      const response = await axios.post(serverUrl + "/api/user/admin", {
+        email,
+        password,
+      });
+      const data = response?.data;
+
+      if (data?.success) {
+        toast.success(data?.message);
+        setToken(data?.token);
+        // toast.success(data?.message);
+      } else {
+        toast.error(data?.message);
+      }
+    } catch (error) {
+      console.log("Login Error", error);
+      toast.error(error?.message);
+    }
   };
   return (
     <div className="flex flex-col gap-2 bg-gray-300 min-h-screen items-center justify-center">
