@@ -9,6 +9,7 @@ const createToken = (user) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      isAdmin: user.isAdmin,
     },
     process.env.JWT_SECRET,
     {
@@ -74,7 +75,7 @@ const userLogin = async (req, res) => {
 //  register
 const userRegister = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, isAdmin } = req.body;
     const existingUser = await userModel.findOne({ email });
 
     // name validation  || request body verification
@@ -134,6 +135,7 @@ const userRegister = async (req, res) => {
       name,
       email,
       password: encryptedPassword,
+      isAdmin,
     });
 
     // Save user in database
@@ -155,16 +157,50 @@ const adminLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    if (
-      email === process.env.ADMIN_EMAIL &&
-      password === process.env.ADMIN_PASSWORD
-    ) {
-      const token = jwt.sign(email + password, process.env.JWT_SECRET);
-      res.json({ success: true, token, message: "Admin Login successful" });
-    } else {
-      res.json({
+    if (!email) {
+      return res.json({
         success: false,
-        message: "Invalid credentials please try again",
+        message: "Email is required",
+      });
+    }
+    
+    if (!password) {
+      return res.json({
+        success: false,
+        message: "Password is required",
+      });
+    }
+    
+    const user = await userModel.findOne({ email });
+    // if user exist
+
+    if (!user) {
+      return res.json({
+        success: false,
+        message: "User does not exist",
+      });
+    }
+
+    if (!user?.isAdmin) {
+      return res.json({
+        success: false,
+        message: "You are not authorized to login",
+      });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (isMatch && user.isAdmin) {
+      const token = createToken(user);
+      return res.json({
+        success: true,
+        token,
+        message: "Admin Login successfully",
+      });
+    } else {
+      return res.json({
+        success: false,
+        message: "Email Or Password not correct, please try again",
       });
     }
   } catch (error) {
@@ -231,14 +267,12 @@ const updateUser = async (req, res) => {
   }
 };
 const getUsers = async (req, res) => {
-
-   try{
-    const total = await userModel.countDocuments({})
-    const users = await userModel.find({})
+  try {
+    const total = await userModel.countDocuments({});
+    const users = await userModel.find({});
 
     res.json({ success: true, total, users });
-
-   } catch (error) {
+  } catch (error) {
     console.log("Get users Error", error);
     res.json({ success: false, message: error?.message });
   }

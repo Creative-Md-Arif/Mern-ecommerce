@@ -9,8 +9,11 @@ const adminAuth = (req, res, next) => {
     }
 
     const decode_token = jwt.verify(token, process.env.JWT_SECRET);
+    const {isAdmin} = decode_token;
+   
+    
 
-    if (decode_token !== process.env.ADMIN_EMAIL + process.env.ADMIN_PASSWORD) {
+    if (!isAdmin) {
       return res.json({ success: false, message: "Please Login First" });
     }
 
