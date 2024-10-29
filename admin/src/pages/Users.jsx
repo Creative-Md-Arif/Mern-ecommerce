@@ -6,11 +6,13 @@ import Loader from "../components/Loader";
 import Title from "../components/Title";
 import { IoMdAdd, IoMdClose } from "react-icons/io";
 import Swal from "sweetalert2";
+import NewUserForm from "../components/NewUserForm";
 
 const Users = ({ token }) => {
   const [usersList, setUsersList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedUser, setSelectedUser] = useState(null);
+  let [isOpen, setIsOpen] = useState(false);
 
   const getUsersList = async () => {
     try {
@@ -49,7 +51,7 @@ const Users = ({ token }) => {
       });
       return;
     }
-  
+
     const confirmRemoval = await Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -59,7 +61,7 @@ const Users = ({ token }) => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     });
-  
+
     if (confirmRemoval.isConfirmed) {
       setIsLoading(true);
       try {
@@ -67,7 +69,7 @@ const Users = ({ token }) => {
           _id,
         });
         const data = response?.data;
-  
+
         if (data?.success) {
           Swal.fire("Deleted!", data?.message, "success");
           await getUsersList();
@@ -82,7 +84,15 @@ const Users = ({ token }) => {
       }
     }
   };
-  
+
+  const openLoginForm =() => {
+    setSelectedUser(null);
+    setIsOpen(true);
+  }
+
+  const closeLoginForm =() => {
+    setIsOpen(false);
+  }
 
   return (
     <div>
@@ -92,7 +102,7 @@ const Users = ({ token }) => {
         <div>
           <div className=" flex items-center justify-between max-w-3xl">
             <Title>Users</Title>
-            <button className=" flex items-center gap-1 bg-black/80 text-white px-6 text-sm font-medium py-2 rounded-md hover:bg-black duration-300 transition-colors">
+            <button onClick={openLoginForm} className=" flex items-center gap-1 bg-black/80 text-white px-6 text-sm font-medium py-2 rounded-md hover:bg-black duration-300 transition-colors">
               Add user <IoMdAdd />
             </button>
           </div>
@@ -101,7 +111,7 @@ const Users = ({ token }) => {
               <div className=" grid grid-cols-[2fr_1fr_1fr] md:grid-cols-[2fr_2fr_1fr_1fr_1fr] items-center py-1 px-2 border bg-gray-100 text-sm my-1.5">
                 <b className="hidden md:inline-block">Name</b>
                 <b>Email</b>
-                <b>Admin</b>
+                <b  className="hidden md:inline-block">Admin</b>
                 <b className=" text-center">Action</b>
                 <b className="text-center">Edit</b>
               </div>
@@ -115,16 +125,22 @@ const Users = ({ token }) => {
                     {item?.name}
                   </p>
                   <p className="font-medium">{item?.email}</p>
-                  <p className={item.isAdmin ? "font-semibold" : "font-normal"}>
+                  <p className={item.isAdmin ? "font-semibold hidden md:inline-block" : "font-normal hidden md:inline-block"}>
                     {item?.isAdmin ? "Admin" : "User"}
                   </p>
                   <p>
                     <IoMdClose
-                     onClick={() => handleRemoveUser(item?._id, item?.isAdmin)}
+                      onClick={() => handleRemoveUser(item?._id, item?.isAdmin)}
                       className=" text-lg cursor-pointer hover:text-red-600 duration-300 ease-in-out text-center w-full"
                     />
                   </p>
-                  <button className=" text-base cursor-pointer hover:text-green-600 duration-300 ease-in-out">
+                  <button
+                    onClick={() => {
+                      setSelectedUser(item);
+                      setIsOpen(true);
+                    }}
+                    className=" text-base cursor-pointer hover:text-green-600 duration-300 ease-in-out"
+                  >
                     Edit
                   </button>
                 </div>
@@ -138,6 +154,14 @@ const Users = ({ token }) => {
           )}
         </div>
       )}
+      <NewUserForm
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        close={closeLoginForm}
+        getUsersList={getUsersList}
+        setSelectedUser={setSelectedUser}
+        selectedUser={selectedUser}
+      />
     </div>
   );
 };
