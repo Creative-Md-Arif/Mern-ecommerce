@@ -4,7 +4,7 @@ import Title from '../components/Title'
 const Shop = () => {
   return (
    <Title>
-    Shop page
+     Shop page
    </Title>
   )
 }

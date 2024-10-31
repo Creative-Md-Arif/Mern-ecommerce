@@ -10,3 +10,4 @@
 6.npm i cros
 7.npm i bcrypt
 8.json webtoken
+9.npm i cloudinary
