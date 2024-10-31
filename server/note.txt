@@ -1,5 +1,13 @@
 1.npmjs.com
 // Install npm i nodemon
 
-2./expressjs.com
+2.expressjs.com
 // Install npm i express
+
+3.npm i dotenv
+4.npm i mongoose
+5.npm i validator
+6.npm i cros
+7.npm i bcrypt
+8.json webtoken
+9.npm i cloudinary

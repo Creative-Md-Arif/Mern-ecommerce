@@ -1,3 +1,7 @@
-1.install npm i clsx
-2.install npm i tailwind-merge
+1.npm i clsx
+2.npm i tailwind-merge
 3.npm i react-icons
+4.npm i react-router-dom
+5.npm i react-slick
+6.npm install slick-carousel
+7.npm install @headlessui/react
