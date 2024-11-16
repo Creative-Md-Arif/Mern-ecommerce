@@ -76,7 +76,7 @@ const NewArrival = () => {
 
   return (
     <div className="w-full py-10">
-      <Title>New Arrivals</Title>
+      <Title className="mb-5">New Arrivals</Title>
       {products?.length > 0 ? (
         <Slider {...settings}>
           {products?.map((item) => (
