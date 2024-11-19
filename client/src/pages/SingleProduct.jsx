@@ -34,14 +34,14 @@ const SingleProduct = () => {
     }
   }, [id]);
 
-  console.log(product);
+
 
   return (
     <Container className="grid grid-cols-2 gap-10">
       <div className="w-full max-h-[500px] group overflow-hidden rounded-md border border-gray-300">
         <img
           src={product?.images[0]}
-          alt="productImage"
+          alt={product?.images[0]}
           className="w-full h-full object-cover rounded-md group-hover:scale-110 duration-500 transition-transform ease-in-out"
         />
       </div>
