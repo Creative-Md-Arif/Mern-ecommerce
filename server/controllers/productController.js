@@ -78,9 +78,9 @@ const addProduct = async (req, res) => {
       discountedPercentage: Number(discountedPercentage),
       category,
       brand: brand ? brand : "",
-      badge: badge === true ? true : false,
-      isAvailable: isAvailable === true ? true : false,
-      offer: offer === true ? true : false,
+      badge: badge === "true" ? true : false,
+      isAvailable: isAvailable === "true" ? true : false,
+      offer: offer === "true" ? true : false,
       description,
       images: imagesUrl,
       tags: tags ? parsedTags : [],
@@ -148,7 +148,7 @@ const listProduct = async (req, res) => {
 
 const singleProduct = async (req, res) => {
   try {
-    const { _id } = req.body;
+    const { _id } = req.query;
     const product = await productModel.findById(_id);
 
     if (!product) {

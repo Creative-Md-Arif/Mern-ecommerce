@@ -7,12 +7,14 @@ import { FaUser } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import { headerNavigation } from "../constants";
 import { Link, NavLink } from "react-router-dom";
-import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import {  Dialog, DialogPanel } from "@headlessui/react";
 import Title from "./Title";
 import { IoCloseOutline } from "react-icons/io5";
 import SocialLinks from "./SocialLinks";
+import { useSelector } from "react-redux";
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { products } = useSelector((state) => state.orebi);
 
   return (
     <div className="border-b-[1px] border-slate-300 sticky top-0 z-50 bg-white">
@@ -38,7 +40,7 @@ const Header = () => {
           >
             <FaShoppingCart />
             <span className="absolute -top-1 -right-2 text-white bg-lightText group-hover:bg-primary  hoverEffect text-xs w-4 h-4 flex items-center justify-center rounded-full">
-              0
+              {products?.length > 0 ? products?.length : 0}
             </span>
           </Link>
           <Link

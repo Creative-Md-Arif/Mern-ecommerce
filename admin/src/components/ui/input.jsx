@@ -9,7 +9,7 @@ export const Label = ({ htmlFor, children, className }) => {
   );
 };
 
-const Input = ({ type, placeholder, name, id, value, onChange, classname }) => {
+const Input = ({ type, placeholder, name, id, value, onChange, classname , disabled}) => {
   return (
     <input
       type={type}
@@ -18,6 +18,7 @@ const Input = ({ type, placeholder, name, id, value, onChange, classname }) => {
       id={id}
       value={value}
       onChange={onChange}
+      disabled={disabled}
       className={cn(
         "border px-4 py-1 border-gray-400 rounded-md max-w-lg",
         classname
