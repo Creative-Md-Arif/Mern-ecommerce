@@ -14,30 +14,22 @@ import toast from "react-hot-toast";
 const Cart = () => {
   const { products } = useSelector((state) => state.orebi);
   const dispatch = useDispatch();
-  const [subTotal , setSubTotal] = useState("");
-  const [discount , setDiscount] = useState("")
+  const [subTotal, setSubTotal] = useState("");
+  const [total, setTotal] = useState("");
 
-  // useEffect(() => {
-
-  //   let price = 0;
-  //   let discountedPrice = 0;
-  //   products?.map((item) => {
-  //     price += (item)
-  //   })
-  
-  // }, []);
-
-
-
-
-
-
-
-
-
-
-
-
+  useEffect(() => {
+    let price = 0;
+    let discountedPrice = 0;
+    products?.map((item) => {
+      price +=
+        item?.price * item?.quantity +
+        ((item?.discountedPercentage * item?.price) / 100) * item?.quantity;
+      discountedPrice += item?.price * item?.quantity;
+      return price, discountedPrice;
+    });
+    setSubTotal(price);
+    setTotal(discountedPrice);
+  }, [products]);
 
   const handleReset = () => {
     Swal.fire({
@@ -53,9 +45,25 @@ const Cart = () => {
       if (result.isConfirmed) {
         // User confirmed the action
         dispatch(resetCart());
-        Swal.fire("Deleted!", "Your cart has been cleared.", "success");
+        Swal.fire("Deleted!", "Your cart has been cleared.", "success" ,{
+          timer: 2000,
+          timerProgressBar: true,
+        });
       }
     });
+  };
+
+
+  const handleCheckout = () => {
+    toast.success(`Your order has been placed for BDT ${total}`, {
+      duration: 2000,
+      position: "top-center",
+      style: {
+        background: "green",
+        color: "white",
+      },
+    });
+      // dispatch(checkout());
   };
 
   return (
@@ -90,24 +98,24 @@ const Cart = () => {
                   <p className="flex items-center justify-between border-[1px] py-1.5 px-4 text-lg font-medium">
                     Subtotal{" "}
                     <PriceFormet
-                      amount={products?.reduce(
-                        (acc, item) => acc + item.price * item.quantity,
-                        0
-                      )}
+                      amount={subTotal}
                       className="font-semibold tracking-wide"
                     />
                   </p>
                   <p className="flex items-center justify-between border-[1px] py-1.5 px-4 text-lg font-medium border-b-0 border-t-0 ">
                     Discount{" "}
-                    <PriceFormet className="font-semibold tracking-wide" />
+                    <PriceFormet amount={subTotal - total} className="font-semibold tracking-wide" />
                   </p>
-                  <p className="flex items-center justify-between border-[1px] py-1.5 px-4 text-lg font-medium ">
+                  <p className="flex items-center justify-between border-[1px] py-1.5 px-4 text-lg font-bold ">
                     Total{" "}
-                    <PriceFormet className="font-bold tracking-wide text-xl" />
+                    <PriceFormet amount={total} className="font-bold tracking-wide text-xl" />
                   </p>
                 </div>
                 <div>
-                  <button onClick={() => toast.success("Checkout successful")} className="w-full rounded-md py-2.5 bg-primary/80 text-white hover:bg-primary hoverEffect">
+                  <button
+                    onClick={handleCheckout}
+                    className="w-full rounded-md py-2.5 bg-primary/80 text-white hover:bg-primary hoverEffect"
+                  >
                     Proceed to checkout
                   </button>
                 </div>
